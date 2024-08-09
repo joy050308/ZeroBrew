@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>ZeroBrew - searchCafe</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <style>
+            .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+.map_wrap {position:relative;width:100%;height:400px;}
+#menu_wrap {position:absolute;top:695px;left:20;bottom:0;width:225px;height:390px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.6);z-index: 1;font-size:12px;border-radius: 10px;}
+.bg_white {background:#fff;}
+#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+#menu_wrap .option{text-align: center;}
+#menu_wrap .option p {margin:10px 0;}  
+#menu_wrap .option button {margin-left:5px;}
+.bassic {margin: 5px;}
+/* #placesList li {list-style: none;}
+#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+#placesList .item span {display: block;margin-top:4px;}
+#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item .info{padding:10px 0 10px 55px;}
+#placesList .info .gray {color:#8a8a8a;}
+#placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+#placesList .info .tel {color:#009900;}
+#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;} */
+/* #placesList .item .marker_1 {background-position: 0 -10px;}
+#placesList .item .marker_2 {background-position: 0 -56px;}
+#placesList .item .marker_3 {background-position: 0 -102px}
+#placesList .item .marker_4 {background-position: 0 -148px;}
+#placesList .item .marker_5 {background-position: 0 -194px;}
+#placesList .item .marker_6 {background-position: 0 -240px;}
+#placesList .item .marker_7 {background-position: 0 -286px;}
+#placesList .item .marker_8 {background-position: 0 -332px;}
+#placesList .item .marker_9 {background-position: 0 -378px;}
+#placesList .item .marker_10 {background-position: 0 -423px;}
+#placesList .item .marker_11 {background-position: 0 -470px;}
+#placesList .item .marker_12 {background-position: 0 -516px;}
+#placesList .item .marker_13 {background-position: 0 -562px;}
+#placesList .item .marker_14 {background-position: 0 -608px;}
+#placesList .item .marker_15 {background-position: 0 -654px;} */
+        </style>
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&family=Roboto&display=swap" rel="stylesheet"> 
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+        <!-- Topbar Start -->
+        <div class="container-fluid bg-primary px-5 d-none d-lg-block">
+            <div class="row gx-0">
+                <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
+                    <div class="d-inline-flex align-items-center" style="height: 45px;">
+                        
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center text-lg-end">
+                    <div class="d-inline-flex align-items-center" style="height: 45px;">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Topbar End -->
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-fluid position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+                <a href="index.html" class="navbar-brand p-0">
+                    <h1 class="m-0"><i class="fa fa-map-marker-alt me-3"></i>ZeroBrew</h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <!-- <a href="index.html" class="nav-item nav-link">Home</a> -->
+                        <a href="about1ZeroWaste.html" class="nav-item nav-link">제로웨이스트란?</a>
+                        <a href="about2CHKcafe.html" class="nav-item nav-link">친환경 카페란?</a>
+                        <!-- <a href="services.html" class="nav-item nav-link">Services</a> -->
+                        <a href="searchCafe.html" class="nav-item nav-link active">매장찾기</a>
+                    </div>
+                    <a href="login.html" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">마이페이지</a>
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar & Hero End -->
+
+        <!-- Header Start -->
+        <div class="container-fluid bg-breadcrumb">
+            <div class="container text-center py-5" style="max-width: 900px;">
+                <h3 class="text-white display-3 mb-4">매장찾기</h1>
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <!-- <li class="breadcrumb-item"><a href="#">Pages</a></li> -->
+                    <li class="breadcrumb-item active text-white">친환경 카페 찾기</li>
+                </ol>    
+            </div>
+        </div>
+        <!-- Header End -->
+
+        <!-- Contact Start -->
+        <div class="container-fluid contact bg-light py-5">
+            <div class="container py-5">
+                <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+                    <h5 class="section-title px-3">매장 찾기</h5>
+                    <h1 class="mb-0">Find your own Cafe</h1>
+                </div>
+                <div class="row g-5 align-items-center">
+                    <div class="col-12">
+                        <div id="map_wrap">
+                            <div id="map" style="width:100%;height:400px;">
+                            </div>
+                            <div id="menu_wrap" class="bg_white">
+                                <div class="option">
+                                    <p>서울 제로웨이스트 카페 목록</p>
+                                </div>
+                                <hr>
+                                <div class="bassic" style="border-bottom: 1px solid #5F5F5F;">
+                                    <div class="title"> <b>카페 쏠</b> </div>
+                                    <div class="body"> 
+                                        <div class="desc"> 
+                                           <div class="ellipsis">서울 서대문구 통일로 364</div> 
+                                           <div class="jibun ellipsis">(우) 03635 (지번) 홍제동 24-5</div>
+                                           <div><a href="https://place.map.kakao.com/23992066" target="_blank" class="link" >상세 정보</a></div>
+                                        </div>
+                                      </div>
+                                </div>
+                                <div class="bassic" style="border-bottom: 1px solid #5F5F5F;">
+                                    <div class="title"> <b>얼스 어스</b> </div>
+                                    <div class="body"> 
+                                        <div class="desc"> 
+                                         <div class="ellipsis">서울 마포구 성미산로 150</div> 
+                                         <div class="jibun ellipsis">(우) 03983 (지번) 연남동 239-49</div>
+                                         <div><a href="https://place.map.kakao.com/111850276" target="_blank" class="link" >상세 정보</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bassic" style="border-bottom: 1px solid #5F5F5F;">
+                                    <div class="title"> <b>페이퍼넛츠</b> </div>
+                                    <div class="body"> 
+                                      <div class="desc"> 
+                                         <div class="ellipsis">서울 서대문구 거북골로24길 37-8 1층</div> 
+                                         <div class="jibun ellipsis">(우) 03680 (지번) 북가좌동 346-2</div>
+                                         <div><a href="https://place.map.kakao.com/627728263" target="_blank" class="link" >상세 정보</a></div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="bassic" style="border-bottom: 1px solid #5F5F5F;">
+                                    <div class="title"> <b>보틀라운지</b> </div>
+                                    <div class="body"> 
+                                      <div class="desc"> 
+                                         <div class="ellipsis">서울 서대문구 홍연길 26 1층</div> 
+                                         <div class="jibun ellipsis">(우) 03695 (지번) 연희동 708</div>
+                                         <div><a href="https://place.map.kakao.com/1480755504" target="_blank" class="link" >상세 정보</a></div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="bassic" style="border-bottom: 1px solid #5F5F5F;">
+                                    <div class="title"> <b>야트막</b> </div>
+                                    <div class="body"> 
+                                      <div class="desc"> 
+                                         <div class="ellipsis">서울 서대문구 독립문로 29 1층</div> 
+                                         <div class="jibun ellipsis">(우) 03734 (지번) 옥천동 45-7</div>
+                                         <div><a href="https://place.map.kakao.com/61731899" target="_blank" class="link" >상세 정보</a></div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="bassic" style="border-bottom: 1px solid #5F5F5F;">
+                                    <div class="title"> <b>커피도가 헤리티지</b> </div>
+                                    <div class="body"> 
+                                      <div class="desc"> 
+                                         <div class="ellipsis">서울 서대문구 이화여대5길 9 파크제이드이화 1층 102호</div> 
+                                         <div class="jibun ellipsis">(우) 03766 (지번) 대현동 56-31</div>
+                                         <div><a href="https://place.map.kakao.com/1805218578" target="_blank" class="link" >상세 정보</a></div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="bassic" style="border-bottom: 1px solid #5F5F5F;">
+                                    <div class="title"> <b>알맹상점 리스테이션</b> </div>
+                                    <div class="body"> 
+                                      <div class="desc"> 
+                                         <div class="ellipsis">서울 중구 한강대로 405 4층</div> 
+                                         <div class="jibun ellipsis">(우) 04509 (지번) 북가좌동 346-2</div>
+                                         <div><a href="https://place.map.kakao.com/319864914" target="_blank" class="link" >상세 정보</a></div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="bassic" style="border-bottom: 1px solid #5F5F5F;">
+                                    <div class="title"> <b>카페서로</b> </div>
+                                    <div class="body"> 
+                                      <div class="desc"> 
+                                         <div class="ellipsis">서울 마포구 만리재로 96 1층</div> 
+                                         <div class="jibun ellipsis">(우) 04185 (지번) 공덕동 108-57</div>
+                                         <div><a href="https://place.map.kakao.com/276316257" target="_blank" class="link" >상세 정보</a></div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="bassic" style="border-bottom: 1px solid #5F5F5F;">
+                                    <div class="title"> <b>목로정원</b> </div>
+                                    <div class="body"> 
+                                      <div class="desc"> 
+                                         <div class="ellipsis">서울 성동구 서울숲2길 47 3층 301호</div> 
+                                         <div class="jibun ellipsis">(우) 04768 (지번) 성수동1가 668-39</div>
+                                         <div><a href="https://place.map.kakao.com/883186039" target="_blank" class="link" >상세 정보</a></div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="bassic" style="border-bottom: 1px solid #5F5F5F;">
+                                    <div class="title"> <b>노노샵</b> </div>
+                                    <div class="body"> 
+                                      <div class="desc"> 
+                                         <div class="ellipsis">서울 용산구 보광로 90 태광빌딩 2층 202호</div> 
+                                         <div class="jibun ellipsis">(우) 04406 (지번) 이태원동 21-1</div>
+                                         <div><a href="https://place.map.kakao.com/1821435324" target="_blank" class="link" >상세 정보</a></div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="bassic" style="border-bottom: 1px solid #5F5F5F;">
+                                    <div class="title"> <b>스왈로베이커리카페</b> </div>
+                                    <div class="body"> 
+                                      <div class="desc"> 
+                                         <div class="ellipsis">서울 서초구 효령로 276 2층</div> 
+                                         <div class="jibun ellipsis">(우) 06716 (지번) 서초동 1457-2</div>
+                                         <div><a href="https://place.map.kakao.com/1320767156" target="_blank" class="link" >상세 정보</a></div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=4df578038063d5b572222f6435a495b0"></script>
+	                        <script>
+		                        var container = document.getElementById('map');
+		                        var options = {
+			                    center: new kakao.maps.LatLng(37.554688, 126.971636),
+			                    level: 9
+		                        };
+
+		                        var map = new kakao.maps.Map(container, options);
+ 
+                                var points = [
+                                    {content: '<div>보틀라운지</div>', latlng: new kakao.maps.LatLng(37.575154, 126.928472)}, // 보틀라운지 서대문
+                                    {content: '<div>야트막</div>', latlng: new kakao.maps.LatLng(37.569437, 126.961382)}, // 야트막 서대문
+                                    {content: '<div>커피도가 헤리티지</div>', latlng: new kakao.maps.LatLng(37.558314, 126.945137)}, // 커피도가 헤리티지 서대문
+                                    {content: '<div>페이퍼넛츠</div>', latlng: new kakao.maps.LatLng(37.581208, 126.908227)}, // 페이퍼넛츠 서대문
+                                    {content: '<div>얼스 어스</div>', latlng: new kakao.maps.LatLng(37.585322, 126.971227)}, // 얼스 어스 마포
+                                    {content: '<div>노노샵</div>', latlng: new kakao.maps.LatLng(37.531109, 126.995832)}, // 노노샵 용산
+                                    {content: '<div>스왈로베이커리카페</div>', latlng: new kakao.maps.LatLng(37.484398, 127.014466)}, // 스왈로베이커리카페 서초
+                                    {content: '<div>카페 쓸</div>', latlng: new kakao.maps.LatLng(37.607346, 126.933333)}, // 카페 쓸 은평
+                                    {content: '<div>알맹상점 리스테이션</div>', latlng: new kakao.maps.LatLng(37.555042, 126.969539)}, // 알맹상점 리스테이션 중구
+                                    {content: '<div>카페서로</div>', latlng: new kakao.maps.LatLng(37.548786, 126.959851)}, // 카페서로 마포
+                                    {content: '<div>목로정원</div>', latlng: new kakao.maps.LatLng(37.546353, 127.043926)} // 목로정원 성동
+                                ];
+
+                                            // 검색 결과 목록과 마커를 표출하는 함수입니다
+function displayPlaces(places) {
+
+var listEl = document.getElementById('placesList'), 
+menuEl = document.getElementById('menu_wrap'),
+fragment = document.createDocumentFragment(), 
+bounds = new kakao.maps.LatLngBounds(), 
+listStr = '';}
+
+                                for (var i = 0; i < points.length; i++) {
+                                    // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
+                                    var marker = new kakao.maps.Marker({map: map, position : points[i].latlng });
+                                    // marker.setMap(map);
+
+                                    // 마커에 표시할 인포윈도우를 생성합니다 
+                                    var infowindow = new kakao.maps.InfoWindow({
+                                        content: points[i].content // 인포윈도우에 표시할 내용
+                                    });
+
+                                    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+                                    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+                                    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+                                    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                                    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+                                }
+
+                                function setBounds() {
+                                    // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+                                    // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+                                    map.setBounds(bounds);
+                                }
+
+                                // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+                                function makeOverListener(map, marker, infowindow) {
+                                    return function() {
+                                        infowindow.open(map, marker);
+                                    };
+                                }
+
+                                // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+                                function makeOutListener(infowindow) {
+                                    return function() {
+                                        infowindow.close();
+                                    };
+                                }
+                                
+	                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                            </div>
+                            </div>
+                        </div>
+        
+        <!-- Copyright Start -->
+        <div class="container-fluid copyright text-body py-4">
+            <div class="container">
+                <div class="row g-4 align-items-center">
+                    <div class="col-md-6 text-center text-md-end mb-md-0">
+                        <i class="fas fa-copyright me-2"></i><a class="text-white" href="#">ZeroBrew</a>, All right reserved.
+                    </div>
+                    <div class="col-md-6 text-center text-md-start">
+                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
+                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+        
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/lightbox/js/lightbox.min.js"></script>
+        
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+
+    </body>
+
+</html>
